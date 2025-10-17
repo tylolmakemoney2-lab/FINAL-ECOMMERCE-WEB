@@ -7,16 +7,16 @@ export interface Product {
   price: number;
   description: string;
   images: string[];
-  category: { id: number; name: string };
+  category: string;   // DummyJSON returns string category
 }
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private baseUrl = 'https://api.escuelajs.co/api/v1/products';
+  private baseUrl = 'https://dummyjson.com/products';
 
-  async getProducts(limit = 24, offset = 0): Promise<Product[]> {
-    const res = await axios.get(`${this.baseUrl}?offset=${offset}&limit=${limit}`);
-    return res.data;
+  async getProducts(limit = 24, skip = 0): Promise<Product[]> {
+    const res = await axios.get(`${this.baseUrl}?limit=${limit}&skip=${skip}`);
+    return res.data.products; // DummyJSON wraps in "products"
   }
 
   async getProduct(id: number): Promise<Product> {
